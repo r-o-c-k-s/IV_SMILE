@@ -1,161 +1,111 @@
-# IV_SMILE 📈 – Volatility Smile Prediction Pipeline
+# IV_SMILE 📈 – Pipeline de Prédiction du Volatility Smile
 
-This project builds a real-time machine learning pipeline to predict the **volatility smile** of SPY options using data streamed from Interactive Brokers (TWS), processed via Kafka, and modeled with deep learning architectures (GRU, LSTM, MLP, Transformer).  
-Training runs are tracked using **MLflow** and results are stored in **TimescaleDB**.
-
----
-
-## 🚀 Architecture Overview
-
-```
-TWS (IB API)
-    ↓
-Kafka Producer (Python)
-    ↓
-Kafka Topic
-    ↓
-Kafka Consumer + Feature Engineering
-    ↓
-TimescaleDB (option_features table)
-    ↓
-Deep Learning Models (GRU, LSTM, MLP, Transformer)
-    ↓
-MLflow (model tracking, metrics, artifacts)
-```
+Ce projet met en place un pipeline d'intelligence artificielle en temps réel pour prédire le **volatility smile** des options SPY à partir de données diffusées par Interactive Brokers (TWS), traitées via Kafka, et modélisées à l'aide de réseaux de neurones profonds (GRU, LSTM, MLP, Transformer).  
+Les entraînements sont suivis via **MLflow** et les résultats sont stockés dans **TimescaleDB**.
 
 ---
 
-## 📦 Project Structure
+## 🚀 Vue d'ensemble de l'architecture
+
+```
+TWS (API IB)
+    ↓
+Producteur Kafka (Python)
+    ↓
+Topic Kafka
+    ↓
+Consommateur Kafka + Feature Engineering
+    ↓
+TimescaleDB (table option_features)
+    ↓
+Modèles IA (GRU, LSTM, MLP, Transformer)
+    ↓
+MLflow (suivi des modèles, métriques, artefacts)
+```
+
+---
+
+## 📦 Structure du projet
 
 ```
 IV_SMILE/
-├── producer/            # TWS to Kafka
-├── consumer/            # Kafka to TimescaleDB (feature engineering)
-├── model/               # Deep learning models and training logic
+├── producer/              # De TWS vers Kafka
+├── consumer/              # De Kafka vers TimescaleDB (feature engineering)
+├── model/                 # Modèles IA et logique d'entraînement
 │   ├── gru_model.py
 │   ├── lstm_model.py
 │   ├── mlp_model.py
 │   ├── transformer_model.py
 │   ├── train_model.py
-├── mlruns/              # MLflow run logs (excluded from Git)
-├── docker-compose.yml   # Full pipeline orchestration
-├── explore_db.py        # Script to explore the DB manually
+├── mlruns/                # Logs MLflow (exclu du Git)
+├── docker-compose.yml     # Orchestration complète
+├── explore_db.py          # Script pour explorer la base Timescale
 ├── README.md
 └── .gitignore
 ```
 
 ---
 
-## 🧠 Models
+## 🧠 Modèles utilisés
 
-
-The following models are trained on time-sequenced SPY option data to predict **implied volatility**:
+Les modèles suivants sont entraînés sur des séquences temporelles d’options SPY pour prédire la **volatilité implicite** :
 - ✅ GRU
 - ✅ LSTM
 - ✅ MLP
 - ✅ Transformer
 
-Each model logs:
-- Parameters: `lr`, `seq_length`, `epochs`, etc.
-- Metrics: `epoch_loss`, `final_loss`
-- Artifacts: saved `.pth` models, `MLmodel` metadata, environments
+Chaque modèle enregistre :
+- Les hyperparamètres : `lr`, `seq_length`, `epochs`, etc.
+- Les métriques : `epoch_loss`, `final_loss`
+- Les artefacts : modèle `.pth`, fichiers de configuration MLflow
 
 ---
 
-## 🐳 Running the Project
-
-### Train all models with Docker
-```bash
-for model in GRU LSTM MLP TRANSFORMER; do
-  docker-compose run --rm model-trainer python train_model.py --model $model
-done
-```
-
-### Launch MLflow UI
-```bash
-mlflow ui --backend-store-uri ./mlruns
-```
-➡ Then open: http://127.0.0.1:5000/
-
----
-
-## 💾 MLflow UI
-You can compare runs, view metrics and download models from the MLflow interface.
-
----
-
-## ✅ TODO (Next Enhancements)
-- [ ] `predict_smile.py` — Inference from saved models
-- [ ] FastAPI or Flask service to serve models in real-time
-- [ ] Add visualization for volatility smile curves
-- [ ] Deploy to cloud (AWS/GCP)
-- [ ] Integrate notebook-based demos for presentations
-
----
-
-## 🧪 Requirements
-All dependencies are inside each component’s `requirements.txt`. You can install them or use Docker for isolation.
-
----
-
-## 📜 License
-MIT © Khalil Amouri — Feel free to contribute or fork.
-
-## 🧠 Feature Engineering Design
-
-The goal of feature engineering in this project is to help sequential models (GRU, LSTM, Transformer, etc.) learn the dynamic behavior of the **volatility smile** by combining market structure information with temporal context.
-
----
+## 🔧 Conception des Features
 
 ### ✅ 1. `log_moneyness`
 ```python
 log_moneyness = log(strike / spot_price)
 ```
-- Captures the relative position of the strike to the underlying.
-- Commonly used in volatility surface modeling.
+- Capture la position relative du strike par rapport au sous-jacent.
+- Utilisé dans la plupart des modèles de surface de volatilité.
 
 ---
 
-### ✅ 2. `dte` – Days to Expiration
+### ✅ 2. `dte` – Jours avant expiration
 ```python
 dte = (maturity_date - ts_utc).total_seconds() / (60 * 60 * 24)
 ```
-- Measures the remaining time until option expiration in days.
-- Crucial for modeling time decay effects.
+- Temps restant avant l’expiration, en jours.
+- Très important pour modéliser la dépréciation temporelle.
 
 ---
 
 ### ✅ 3. `right_enc`
 ```python
-right_enc = 0 if right == 'C' else 1
+right_enc = 0 si call, 1 si put
 ```
-- Binary encoding for option type: 0 = Call, 1 = Put.
-- Enables model to distinguish behaviors of puts vs calls.
+- Encodage binaire du type d’option.
 
 ---
 
 ### ✅ 4. `hour_sin`, `hour_cos`
 ```python
-hour = ts_utc.hour + ts_utc.minute / 60
-hour_sin = sin(2π * hour / 24)
-hour_cos = cos(2π * hour / 24)
+Heure en sinus/cosinus sur 24h
 ```
-- Cyclical encoding of time-of-day (e.g., 9:30 AM vs 3:00 PM).
-- Helps model intraday seasonality in volatility.
+- Permet de capturer les effets saisonniers intra-journaliers.
 
 ---
 
 ### ✅ 5. `minutes_since_open`
 ```python
-minutes_since_open = (ts_utc.hour - 9) * 60 + ts_utc.minute - 30
+minutes depuis l'ouverture à 9h30
 ```
-- Measures how long since market open (9:30 AM).
-- Captures volatility clustering around open and close.
+- Capture la dynamique d’ouverture/fermeture des marchés.
 
 ---
 
-### 🧪 Final Feature Set
-
+### 🧪 Vecteur de features final
 ```python
 features = [
     'log_moneyness',
@@ -167,16 +117,56 @@ features = [
     'right_enc'
 ]
 ```
-
-- Features are scaled with `StandardScaler`.
-- Grouped by `(maturity, strike, right)` to form temporal sequences.
-- Used to build time-series inputs of length `SEQ_LENGTH`.
+- Normalisé avec `StandardScaler`
+- Groupé par `(maturity, strike, right)`
+- Utilisé sur des séquences temporelles de longueur `SEQ_LENGTH`
 
 ---
 
-### 🎯 Target Variable
-
+### 🎯 Cible
 ```python
 target = 'iv'
 ```
-The model predicts the implied volatility of the option **at the next time step**.
+On cherche à prédire la volatilité implicite au pas de temps suivant.
+
+---
+
+## 🐳 Lancer le projet
+
+### Entraîner tous les modèles avec Docker
+```bash
+for model in GRU LSTM MLP TRANSFORMER; do
+  docker-compose run --rm model-trainer python train_model.py --model $model
+done
+```
+
+### Lancer l'interface MLflow
+```bash
+mlflow ui --backend-store-uri ./mlruns
+```
+
+➡ Puis ouvre : http://127.0.0.1:5000/
+
+---
+
+## 💾 Interface MLflow
+Tu peux y comparer les modèles, consulter les courbes de perte, et télécharger les modèles `.pth`.
+
+---
+
+## ✅ Améliorations futures
+- [ ] `predict_smile.py` — Inférence avec modèles MLflow
+- [ ] API FastAPI ou Flask pour servir les modèles
+- [ ] Visualisation du smile en temps réel
+- [ ] Déploiement cloud (AWS, GCP)
+- [ ] Démo interactive en notebook
+
+---
+
+## 🧪 Dépendances
+Chaque composant contient un `requirements.txt`. Tu peux les installer manuellement ou tout lancer via Docker.
+
+---
+
+## 📜 Licence
+MIT © Khalil Amouri — Contributions bienvenues.
