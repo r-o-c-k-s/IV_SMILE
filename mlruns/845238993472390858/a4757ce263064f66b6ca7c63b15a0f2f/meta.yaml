@@ -1,0 +1,15 @@
+artifact_uri: file:///app/mlruns/845238993472390858/a4757ce263064f66b6ca7c63b15a0f2f/artifacts
+end_time: null
+entry_point_name: ''
+experiment_id: '845238993472390858'
+lifecycle_stage: active
+run_id: a4757ce263064f66b6ca7c63b15a0f2f
+run_name: rare-bass-432
+run_uuid: a4757ce263064f66b6ca7c63b15a0f2f
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1748093787413
+status: 1
+tags: []
+user_id: root

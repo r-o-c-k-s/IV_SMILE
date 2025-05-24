@@ -1,0 +1,6 @@
+artifact_location: file:///app/mlruns/150197892203826452
+creation_time: 1748099063469
+experiment_id: '150197892203826452'
+last_update_time: 1748099063469
+lifecycle_stage: active
+name: mlp_volatility_model

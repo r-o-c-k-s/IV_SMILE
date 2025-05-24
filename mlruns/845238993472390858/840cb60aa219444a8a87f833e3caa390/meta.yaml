@@ -1,0 +1,15 @@
+artifact_uri: file:///app/mlruns/845238993472390858/840cb60aa219444a8a87f833e3caa390/artifacts
+end_time: null
+entry_point_name: ''
+experiment_id: '845238993472390858'
+lifecycle_stage: active
+run_id: 840cb60aa219444a8a87f833e3caa390
+run_name: righteous-shoat-513
+run_uuid: 840cb60aa219444a8a87f833e3caa390
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1748051410250
+status: 1
+tags: []
+user_id: root

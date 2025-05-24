@@ -1,0 +1,15 @@
+artifact_uri: file:///app/mlruns/845238993472390858/6312956a49754e3685fc4cef98b15b83/artifacts
+end_time: 1748099019866
+entry_point_name: ''
+experiment_id: '845238993472390858'
+lifecycle_stage: active
+run_id: 6312956a49754e3685fc4cef98b15b83
+run_name: big-cod-295
+run_uuid: 6312956a49754e3685fc4cef98b15b83
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1748098416216
+status: 3
+tags: []
+user_id: root

@@ -1,0 +1,15 @@
+artifact_uri: file:///app/mlruns/845238993472390858/ab139e965cb745f9815d2a967609977d/artifacts
+end_time: 1748100487541
+entry_point_name: ''
+experiment_id: '845238993472390858'
+lifecycle_stage: active
+run_id: ab139e965cb745f9815d2a967609977d
+run_name: youthful-pug-567
+run_uuid: ab139e965cb745f9815d2a967609977d
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1748099912115
+status: 3
+tags: []
+user_id: root

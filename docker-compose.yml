@@ -1,0 +1,99 @@
+services:
+  timescaledb:
+    image: timescale/timescaledb:2.11.1-pg14
+    container_name: timescaledb
+    environment:
+      - POSTGRES_USER=khalil
+      - POSTGRES_PASSWORD=MyStrongPass123
+      - POSTGRES_DB=volatility_db
+      - POSTGRES_INITDB_ARGS=--auth-host=md5
+    ports:
+      - "55432:5432"
+    volumes:
+      - db-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U khalil -d volatility_db"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  zookeeper:
+    image: bitnami/zookeeper:3.8
+    container_name: zookeeper
+    ports:
+      - "2181:2181"
+    environment:
+      - ALLOW_ANONYMOUS_LOGIN=yes
+
+  kafka:
+    image: bitnami/kafka:3.3.2
+    container_name: kafka
+    ports:
+      - "9092:9092"
+    environment:
+      - KAFKA_BROKER_ID=1
+      - KAFKA_CFG_ZOOKEEPER_CONNECT=zookeeper:2181
+      - KAFKA_CFG_ADVERTISED_LISTENERS=PLAINTEXT://kafka:9092
+      - KAFKA_CFG_LISTENERS=PLAINTEXT://0.0.0.0:9092
+      - ALLOW_PLAINTEXT_LISTENER=yes
+    depends_on:
+      - zookeeper
+    healthcheck:
+      test:
+        [
+          "CMD-SHELL",
+          "kafka-topics.sh --bootstrap-server kafka:9092 --list || exit 1",
+        ]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+
+  kafka-producer:
+    build:
+      context: ./producer
+    #network_mode: "host" # <--- ADD THIS LINE
+    container_name: kafka-producer
+    depends_on:
+      - kafka
+    environment:
+      - BOOTSTRAP_SERVERS=kafka:9092
+
+  kafka-consumer:
+    build:
+      context: ./consumer
+    volumes:
+      - ./consumer:/app
+      - ./model:/app/models
+      - ./mlruns:/app/mlruns
+    container_name: kafka-consumer
+    depends_on:
+      kafka:
+        condition: service_healthy
+      timescaledb:
+        condition: service_healthy
+    environment:
+      - BOOTSTRAP_SERVERS=kafka:9092
+      - DB_HOST=timescaledb
+      - DB_PORT=5432
+      - DB_NAME=volatility_db
+      - DB_USER=khalil
+      - DB_PASS=MyStrongPass123
+
+  model-trainer:
+    build:
+      context: ./model
+    volumes:
+      - ./model:/app
+      - ./mlruns:/app/mlruns # Pour que les logs soient visibles localement
+    environment:
+      DB_USER: khalil
+      DB_PASS: MyStrongPass123
+      DB_HOST: timescaledb
+      DB_PORT: 5432
+      DB_NAME: volatility_db
+      MLFLOW_TRACKING_URI: file:/app/mlruns
+    depends_on:
+      - timescaledb
+
+volumes:
+  db-data:

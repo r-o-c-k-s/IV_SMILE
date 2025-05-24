@@ -1,0 +1,15 @@
+artifact_uri: file:///app/mlruns/845238993472390858/7079287edd0943398404f3eb325ffdfb/artifacts
+end_time: 1748096115329
+entry_point_name: ''
+experiment_id: '845238993472390858'
+lifecycle_stage: active
+run_id: 7079287edd0943398404f3eb325ffdfb
+run_name: monumental-hog-956
+run_uuid: 7079287edd0943398404f3eb325ffdfb
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1748095574980
+status: 3
+tags: []
+user_id: root

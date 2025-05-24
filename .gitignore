@@ -1,0 +1,44 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*.so
+
+# Environment variables
+.env
+
+# VSCode settings
+.vscode/
+*.code-workspace
+
+# Docker
+*.log
+*.pid
+*.tar
+*.sock
+*.db
+*.db-journal
+
+# Python virtual environments
+venv/
+env/
+.venv/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Pytest cache
+.pytest_cache/
+
+# Jupyter Notebook checkpoints
+.ipynb_checkpoints/
+
+# Model artifacts or output files
+model/*.pkl
+model/*.joblib
+model/*.h5
+
+# Ignore TimescaleDB or PostgreSQL dumps
+*.sql
+*.dump
+*.backup

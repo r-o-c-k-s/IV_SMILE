@@ -1,0 +1,6 @@
+artifact_location: file:///app/mlruns/518798379010605593
+creation_time: 1748101110880
+experiment_id: '518798379010605593'
+last_update_time: 1748101110880
+lifecycle_stage: active
+name: transformer_volatility_model
