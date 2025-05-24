@@ -48,6 +48,7 @@ IV_SMILE/
 
 ## 🧠 Models
 
+
 The following models are trained on time-sequenced SPY option data to predict **implied volatility**:
 - ✅ GRU
 - ✅ LSTM
@@ -99,3 +100,83 @@ All dependencies are inside each component’s `requirements.txt`. You can insta
 
 ## 📜 License
 MIT © Khalil Amouri — Feel free to contribute or fork.
+
+## 🧠 Feature Engineering Design
+
+The goal of feature engineering in this project is to help sequential models (GRU, LSTM, Transformer, etc.) learn the dynamic behavior of the **volatility smile** by combining market structure information with temporal context.
+
+---
+
+### ✅ 1. `log_moneyness`
+```python
+log_moneyness = log(strike / spot_price)
+```
+- Captures the relative position of the strike to the underlying.
+- Commonly used in volatility surface modeling.
+
+---
+
+### ✅ 2. `dte` – Days to Expiration
+```python
+dte = (maturity_date - ts_utc).total_seconds() / (60 * 60 * 24)
+```
+- Measures the remaining time until option expiration in days.
+- Crucial for modeling time decay effects.
+
+---
+
+### ✅ 3. `right_enc`
+```python
+right_enc = 0 if right == 'C' else 1
+```
+- Binary encoding for option type: 0 = Call, 1 = Put.
+- Enables model to distinguish behaviors of puts vs calls.
+
+---
+
+### ✅ 4. `hour_sin`, `hour_cos`
+```python
+hour = ts_utc.hour + ts_utc.minute / 60
+hour_sin = sin(2π * hour / 24)
+hour_cos = cos(2π * hour / 24)
+```
+- Cyclical encoding of time-of-day (e.g., 9:30 AM vs 3:00 PM).
+- Helps model intraday seasonality in volatility.
+
+---
+
+### ✅ 5. `minutes_since_open`
+```python
+minutes_since_open = (ts_utc.hour - 9) * 60 + ts_utc.minute - 30
+```
+- Measures how long since market open (9:30 AM).
+- Captures volatility clustering around open and close.
+
+---
+
+### 🧪 Final Feature Set
+
+```python
+features = [
+    'log_moneyness',
+    'dte',
+    'hour_sin',
+    'hour_cos',
+    'minutes_since_open',
+    'spot_price',
+    'right_enc'
+]
+```
+
+- Features are scaled with `StandardScaler`.
+- Grouped by `(maturity, strike, right)` to form temporal sequences.
+- Used to build time-series inputs of length `SEQ_LENGTH`.
+
+---
+
+### 🎯 Target Variable
+
+```python
+target = 'iv'
+```
+The model predicts the implied volatility of the option **at the next time step**.
