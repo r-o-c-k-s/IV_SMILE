@@ -7,18 +7,20 @@ Training runs are tracked using **MLflow** and results are stored in **Timescale
 
 ## 🚀 Architecture Overview
 
-```mermaid
-graph LR
-    TWS[IB Gateway / TWS API]
-    Producer[Kafka Producer (Python)]
-    Kafka[Kafka Topic]
-    Consumer[Kafka Consumer + Feature Engineering]
-    TimescaleDB[TimescaleDB]
-    Models[ML Models (GRU, LSTM, MLP, Transformer)]
-    MLflow[MLflow Tracking UI]
-
-    TWS --> Producer --> Kafka --> Consumer --> TimescaleDB
-    TimescaleDB --> Models --> MLflow
+```
+TWS (IB API)
+    ↓
+Kafka Producer (Python)
+    ↓
+Kafka Topic
+    ↓
+Kafka Consumer + Feature Engineering
+    ↓
+TimescaleDB (option_features table)
+    ↓
+Deep Learning Models (GRU, LSTM, MLP, Transformer)
+    ↓
+MLflow (model tracking, metrics, artifacts)
 ```
 
 ---
