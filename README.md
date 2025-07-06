@@ -23,6 +23,9 @@ Ce projet met en œuvre une architecture complète pour la prédiction du *volat
          | Consommateurs Kafka (Dockerisés)           |
          | - Insertion dans TimescaleDB               |
          | - Feature Engineering                      |
+         +----------------+---------------------------+
+                          |
+         +----------------v--------------------------+
          | - Prédicteur Temps Réel (GRU)              |
          +----------------+---------------------------+
                           |
