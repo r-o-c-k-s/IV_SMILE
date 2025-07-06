@@ -1,97 +1,107 @@
-# 📈 Real-Time SPY Volatility Smile Prediction Pipeline
+# 📈 Pipeline de Prédiction du Volatility Smile du SPY en Temps Réel
 
-This project is a full pipeline for real-time prediction of the SPY volatility smile using AI models (GRU, LSTM, MLP, Transformer). It includes ingestion of options market data from IBKR's TWS API, real-time streaming via Kafka, storage in TimescaleDB, feature engineering, ML training, and visualization via Streamlit.
+Ce projet met en œuvre une architecture complète pour la prédiction du *volatility smile* du SPY en temps réel à l'aide de modèles d'IA (GRU, LSTM, MLP, Transformer). Il inclut la collecte des données via l’API TWS d’IBKR, le streaming temps réel avec Kafka, le stockage avec TimescaleDB, l’ingénierie de caractéristiques, l'entraînement de modèles, la prédiction temps réel et la visualisation dynamique avec Streamlit.
 
 ---
 
-## 🔧 Architecture Overview
+## 🔧 Architecture Globale Détaillée
 
 ```
-            +--------------------+
-            |  TWS API (IBKR)   |
-            +--------+-----------+
-                     |
-         +-----------v------------+
-         |  Kafka Producer (API)  |
-         +-----------+------------+
-                     |
-         +-----------v------------+
-         | Kafka Broker (Docker)  |
-         +-----------+------------+
-                     |
-         +-----------v--------------------+
-         | Kafka Consumers (Dockerized)  |
-         |  - Data Writer to TimescaleDB |
-         |  - Feature Engineering        |
-         |  - Real-time Predictor (GRU)  |
-         +-------------------------------+
-                     |
-         +-----------v-------------+
-         | TimescaleDB (Postgres) |
-         +-----------+-------------+
-                     |
-         +-----------v----------------+
-         | Streamlit Dashboard (Live) |
-         +----------------------------+
+            +---------------------+
+            | API TWS (IBKR)      |  ← Données options SPY
+            +----------+----------+
+                       |
+         +-------------v-------------+
+         | Producteur Kafka (API)    |  ← Envoie vers Kafka topic
+         +-------------+-------------+
+                       |
+         +-------------v-------------+
+         | Broker Kafka (Docker)     |
+         +-------------+-------------+
+                       |
+         +-------------v------------------------------+
+         | Consommateurs Kafka (Dockerisés)           |
+         | - Insertion dans TimescaleDB               |
+         | - Feature Engineering                      |
+         | - Prédicteur Temps Réel (GRU)              |
+         +----------------+---------------------------+
+                          |
+              +-----------v------------+
+              | TimescaleDB (Postgres) | ← Stockage structuré
+              +-----------+------------+
+                          |
+              +-----------v-----------------+
+              | Dashboard Streamlit         | ← Visualisation temps réel
+              +-----------------------------+
 ```
 
 ---
 
-## 📦 Components
+## ⚙️ Composants
 
-### 1. **Kafka Producer**
-Fetches SPY option chain data from IB TWS API and sends messages to a Kafka topic every 2 seconds.
+### 1. **Producteur Kafka**
+Récupère la chaîne d’options SPY via l’API TWS d’Interactive Brokers toutes les 2 secondes et envoie les données à Kafka.
 
-### 2. **Kafka Consumer**
-Consumes option chain messages and inserts data into TimescaleDB (`spy_option_chain`).
+### 2. **Consommateurs Kafka**
+- Écrivent les données dans `spy_option_chain`.
+- Effectuent de l’ingénierie de caractéristiques et remplissent la table `option_features`.
 
-### 3. **Feature Engineering**
-Processes `spy_option_chain` to generate engineered features in `option_features` table.
+### 3. **Ingénierie de Caractéristiques**
+Transforme les données brutes en features exploitables pour l’entraînement et l’inférence (log-moneyness, DTE, encoding horaire, etc.).
 
-### 4. **Model Trainer**
-Trains AI models (GRU, etc.) on historical data and logs with MLflow.
+### 4. **Entraîneur de Modèles**
+Entraîne les modèles (GRU, LSTM, MLP, Transformer) et enregistre les modèles + scalers avec MLflow.
 
-### 5. **Real-Time Predictor**
-Loads trained model and StandardScaler from MLflow and performs live inference on `option_features`, writing results to `predicted_smile`.
+### 5. **Prédicteur Temps Réel**
+Charge le modèle MLflow et le StandardScaler pour inférer l’IV en temps réel à partir de `option_features`. Résultats enregistrés dans `predicted_smile`.
 
-### 6. **Streamlit Dashboard**
-Visualizes the volatility smile curve in real time using data from `predicted_smile`.
+### 6. **Dashboard Streamlit**
+Affiche en direct les courbes de volatility smile à partir des prédictions stockées dans `predicted_smile` (via TimescaleDB).
 
 ---
 
-## 🧠 Models
+## 🧠 Modèles d’IA
 
-You can choose and train:
-- GRU (default for real-time)
+Plusieurs modèles peuvent être entraînés et testés :
+- GRU (par défaut pour l’inférence temps réel)
 - LSTM
 - MLP
 - Transformer
 
-The model is saved in MLflow and used in production by the predictor service.
+Les modèles sont suivis avec **MLflow**.
 
 ---
 
-## 📊 TimescaleDB Tables
+## 🗄️ Tables TimescaleDB
 
-- `spy_option_chain`: Raw option chain data
-- `option_features`: Engineered features
-- `predicted_smile`: Real-time IV predictions
+- `spy_option_chain` : données brutes en direct
+- `option_features` : données transformées (features)
+- `predicted_smile` : prédictions IV temps réel
 
 ---
 
-## 🚀 CI/CD (GitHub Actions)
+## 📊 Streamlit Dashboard
 
-CI/CD is managed using GitHub Actions:
+```bash
+cd dashboard
+streamlit run app.py
+```
 
-### Workflow: `.github/workflows/main.yml`
+Affiche en temps réel les smiles IV par maturité. Lecture directe depuis TimescaleDB.
 
-It includes:
-- Docker image build for all services
-- Python linting with `flake8`
-- Unit tests (if `tests/` folder exists)
-- Deployment steps (manual or via GitHub runners)
+---
 
-### Example snippet:
+## ⚙️ CI/CD avec GitHub Actions
+
+Le projet inclut un pipeline CI/CD minimal basé sur GitHub Actions :
+
+### `.github/workflows/main.yml`
+
+- Checkout du repo
+- Lint Python (`flake8`)
+- Tests (`pytest` si présent)
+- Build des containers Docker
+- Optionnel : déploiement vers EC2 ou ECS avec secrets GitHub
 
 ```yaml
 name: Build and Deploy
@@ -112,7 +122,6 @@ jobs:
 
       - name: Install dependencies
         run: |
-          python -m pip install --upgrade pip
           pip install -r predictor/requirements.txt
 
       - name: Run tests
@@ -123,43 +132,31 @@ jobs:
         run: docker-compose build
 ```
 
-> You can customize deployment to EC2, ECS, or any cloud provider using secrets and runners.
-
 ---
 
-## 📦 Installation
+## 🧪 Installation Locale
 
 ```bash
-git clone https://github.com/youruser/volatility-pipeline.git
-cd volatility-pipeline
+git clone https://github.com/KAMOURI018/IV_SMILE.git
+cd IV_SMILE
 docker-compose up --build
 ```
 
-Make sure IB Gateway is running locally and properly connected.
+> **Remarque :** Assurez-vous que l’IB Gateway fonctionne localement.
 
 ---
 
-## 📈 Streamlit Dashboard
-
-```bash
-cd dashboard
-streamlit run app.py
-```
-
-The dashboard fetches `predicted_smile` data from TimescaleDB and updates live.
-
----
-
-## 📁 Directory Structure
+## 📁 Structure du Projet
 
 ```
 .
-├── producer/                  # IBKR Kafka producer
-├── consumer/                  # Kafka consumer & feature engineering
-├── predictor/                 # Real-time model inference
-├── dashboard/                 # Streamlit app
-├── mlruns/                    # MLflow experiments
+├── producer/                  # Producteur Kafka (API IBKR)
+├── consumer/                  # Ingénierie de features + Insertion DB
+├── predictor/                 # Inférence temps réel (modèle GRU)
+├── dashboard/                 # Streamlit pour visualiser les smiles
+├── mlruns/                    # Logs MLflow
 ├── docker-compose.yml
+├── .github/                   # CI/CD workflows
 ├── README.md
 ```
 
@@ -167,8 +164,8 @@ The dashboard fetches `predicted_smile` data from TimescaleDB and updates live.
 
 ## 📬 Contact
 
-Khalil Amouri  
-FRM | AI for Finance  
+**Khalil Amouri**  
+FRM | AI pour la Finance  
 📍 Montréal, Canada  
 ✉️ cashcouscous.ai@gmail.com  
 TikTok: [@cashcouscous](https://tiktok.com/@cashcouscous)
