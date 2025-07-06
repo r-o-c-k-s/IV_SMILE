@@ -1,0 +1,6 @@
+artifact_location: file:///app/mlruns/914230718904732755
+creation_time: 1750870818109
+experiment_id: '914230718904732755'
+last_update_time: 1750870818109
+lifecycle_stage: active
+name: lstm_volatility_model

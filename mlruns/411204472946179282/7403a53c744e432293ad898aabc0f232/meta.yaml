@@ -1,0 +1,14 @@
+artifact_uri: file:///app/mlruns/411204472946179282/7403a53c744e432293ad898aabc0f232/artifacts
+end_time: 1751062734648
+entry_point_name: ''
+experiment_id: '411204472946179282'
+lifecycle_stage: active
+run_id: 7403a53c744e432293ad898aabc0f232
+run_name: sneaky-yak-271
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1751062647242
+status: 3
+tags: []
+user_id: root

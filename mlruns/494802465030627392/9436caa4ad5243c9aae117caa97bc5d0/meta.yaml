@@ -1,0 +1,14 @@
+artifact_uri: file:///app/mlruns/494802465030627392/9436caa4ad5243c9aae117caa97bc5d0/artifacts
+end_time: 1750875640364
+entry_point_name: ''
+experiment_id: '494802465030627392'
+lifecycle_stage: active
+run_id: 9436caa4ad5243c9aae117caa97bc5d0
+run_name: burly-ape-935
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1750875561542
+status: 3
+tags: []
+user_id: root

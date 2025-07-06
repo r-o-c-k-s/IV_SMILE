@@ -1,0 +1,14 @@
+artifact_uri: file:///app/mlruns/411204472946179282/71b1878f65d144038cc3d435b2c244fa/artifacts
+end_time: 1751741176082
+entry_point_name: ''
+experiment_id: '411204472946179282'
+lifecycle_stage: active
+run_id: 71b1878f65d144038cc3d435b2c244fa
+run_name: rogue-goose-220
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1751741147819
+status: 3
+tags: []
+user_id: root

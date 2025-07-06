@@ -1,0 +1,14 @@
+artifact_uri: file:///app/mlruns/494802465030627392/52723801c23c421ea46e269c31cdf30f/artifacts
+end_time: 1751056623927
+entry_point_name: ''
+experiment_id: '494802465030627392'
+lifecycle_stage: active
+run_id: 52723801c23c421ea46e269c31cdf30f
+run_name: shivering-tern-32
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1751056449070
+status: 3
+tags: []
+user_id: root

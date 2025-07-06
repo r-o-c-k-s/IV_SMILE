@@ -1,0 +1,14 @@
+artifact_uri: file:///app/mlruns/494802465030627392/debb187515374669b6e5fc4a53c9a903/artifacts
+end_time: 1751819908232
+entry_point_name: ''
+experiment_id: '494802465030627392'
+lifecycle_stage: active
+run_id: debb187515374669b6e5fc4a53c9a903
+run_name: agreeable-turtle-131
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1751819850902
+status: 3
+tags: []
+user_id: root

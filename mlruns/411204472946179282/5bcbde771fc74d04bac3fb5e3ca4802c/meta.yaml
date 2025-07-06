@@ -1,0 +1,14 @@
+artifact_uri: file:///app/mlruns/411204472946179282/5bcbde771fc74d04bac3fb5e3ca4802c/artifacts
+end_time: 1751597125127
+entry_point_name: ''
+experiment_id: '411204472946179282'
+lifecycle_stage: active
+run_id: 5bcbde771fc74d04bac3fb5e3ca4802c
+run_name: classy-midge-10
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1751597068077
+status: 3
+tags: []
+user_id: root

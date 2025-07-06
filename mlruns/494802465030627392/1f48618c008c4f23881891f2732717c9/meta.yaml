@@ -1,0 +1,14 @@
+artifact_uri: file:///app/mlruns/494802465030627392/1f48618c008c4f23881891f2732717c9/artifacts
+end_time: 1750878602184
+entry_point_name: ''
+experiment_id: '494802465030627392'
+lifecycle_stage: active
+run_id: 1f48618c008c4f23881891f2732717c9
+run_name: thoughtful-hen-243
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1750878565980
+status: 3
+tags: []
+user_id: root

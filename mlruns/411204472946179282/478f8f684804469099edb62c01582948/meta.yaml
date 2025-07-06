@@ -1,0 +1,14 @@
+artifact_uri: file:///app/mlruns/411204472946179282/478f8f684804469099edb62c01582948/artifacts
+end_time: null
+entry_point_name: ''
+experiment_id: '411204472946179282'
+lifecycle_stage: active
+run_id: 478f8f684804469099edb62c01582948
+run_name: delicate-stoat-260
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1751065780700
+status: 1
+tags: []
+user_id: root

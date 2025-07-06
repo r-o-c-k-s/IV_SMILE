@@ -1,0 +1,14 @@
+artifact_uri: file:///app/mlruns/656360602954632657/48c29c9385384271b26a1a63dde147a8/artifacts
+end_time: 1750876872913
+entry_point_name: ''
+experiment_id: '656360602954632657'
+lifecycle_stage: active
+run_id: 48c29c9385384271b26a1a63dde147a8
+run_name: sneaky-sow-610
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1750876665009
+status: 3
+tags: []
+user_id: root

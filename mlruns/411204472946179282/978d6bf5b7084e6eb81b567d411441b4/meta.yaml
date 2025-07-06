@@ -1,0 +1,14 @@
+artifact_uri: file:///app/mlruns/411204472946179282/978d6bf5b7084e6eb81b567d411441b4/artifacts
+end_time: null
+entry_point_name: ''
+experiment_id: '411204472946179282'
+lifecycle_stage: active
+run_id: 978d6bf5b7084e6eb81b567d411441b4
+run_name: zealous-tern-362
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1751597912362
+status: 1
+tags: []
+user_id: root

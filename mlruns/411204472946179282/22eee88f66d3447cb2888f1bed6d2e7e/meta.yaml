@@ -1,0 +1,14 @@
+artifact_uri: file:///app/mlruns/411204472946179282/22eee88f66d3447cb2888f1bed6d2e7e/artifacts
+end_time: 1751064105517
+entry_point_name: ''
+experiment_id: '411204472946179282'
+lifecycle_stage: active
+run_id: 22eee88f66d3447cb2888f1bed6d2e7e
+run_name: melodic-shrimp-31
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1751063943396
+status: 3
+tags: []
+user_id: root

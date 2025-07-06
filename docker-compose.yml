@@ -1,3 +1,5 @@
+version: "3.8"
+
 services:
   timescaledb:
     image: timescale/timescaledb:2.11.1-pg14
@@ -51,7 +53,6 @@ services:
   kafka-producer:
     build:
       context: ./producer
-    #network_mode: "host" # <--- ADD THIS LINE
     container_name: kafka-producer
     depends_on:
       - kafka
@@ -84,7 +85,7 @@ services:
       context: ./model
     volumes:
       - ./model:/app
-      - ./mlruns:/app/mlruns # Pour que les logs soient visibles localement
+      - ./mlruns:/app/mlruns
     environment:
       DB_USER: khalil
       DB_PASS: MyStrongPass123
@@ -95,5 +96,41 @@ services:
     depends_on:
       - timescaledb
 
+  predictor:
+    volumes:
+      - ./mlruns:/app/mlruns
+      - ./predictor:/app
+      - ./predictor/model_artifacts:/app/model_artifacts
+    build:
+      context: ./predictor
+    container_name: predictor
+    environment:
+      - KAFKA_BROKER=kafka:9092
+      - KAFKA_TOPIC=option_data
+      - MLFLOW_MODEL_URI=mlruns\494802465030627392\models\m-5d52f37a35c442ce890f1be629b0222f\artifacts\
+      
+    restart: always
+
+  dashboard:
+    build: ./dashboard
+    ports:
+      - "8501:8501"
+    volumes:
+      - ./dashboard:/app
+    restart: always
+
+  mlflow-server:
+    image: continuumio/miniconda3
+    container_name: mlflow-server
+    ports:
+      - "5000:5000"
+    volumes:
+      - ./mlruns:/mlruns
+    working_dir: /mlruns
+    command: >
+      /bin/bash -c "
+      pip install mlflow && 
+      mlflow ui --backend-store-uri file:/mlruns --host 0.0.0.0 --port 5000
+      "
 volumes:
   db-data:

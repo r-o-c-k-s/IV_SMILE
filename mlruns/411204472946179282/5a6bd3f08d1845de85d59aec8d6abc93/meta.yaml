@@ -1,0 +1,14 @@
+artifact_uri: file:///app/mlruns/411204472946179282/5a6bd3f08d1845de85d59aec8d6abc93/artifacts
+end_time: 1750870939401
+entry_point_name: ''
+experiment_id: '411204472946179282'
+lifecycle_stage: active
+run_id: 5a6bd3f08d1845de85d59aec8d6abc93
+run_name: dashing-penguin-946
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1750870906808
+status: 3
+tags: []
+user_id: root

@@ -1,0 +1,14 @@
+artifact_uri: file:///app/mlruns/411204472946179282/287d6aa53146456b91d175d5e52015b5/artifacts
+end_time: 1751746181209
+entry_point_name: ''
+experiment_id: '411204472946179282'
+lifecycle_stage: active
+run_id: 287d6aa53146456b91d175d5e52015b5
+run_name: luxuriant-smelt-903
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1751746151837
+status: 3
+tags: []
+user_id: root

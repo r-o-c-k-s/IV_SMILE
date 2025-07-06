@@ -1,0 +1,14 @@
+artifact_uri: file:///app/mlruns/494802465030627392/cf990a00c95f400ea8ab72851c6bb563/artifacts
+end_time: 1751058062724
+entry_point_name: ''
+experiment_id: '494802465030627392'
+lifecycle_stage: active
+run_id: cf990a00c95f400ea8ab72851c6bb563
+run_name: unleashed-calf-629
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1751057861966
+status: 3
+tags: []
+user_id: root

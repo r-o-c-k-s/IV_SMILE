@@ -1,0 +1,14 @@
+artifact_uri: file:///app/mlruns/411204472946179282/74270fce5d4443c986bed676857e58b3/artifacts
+end_time: 1751818472319
+entry_point_name: ''
+experiment_id: '411204472946179282'
+lifecycle_stage: active
+run_id: 74270fce5d4443c986bed676857e58b3
+run_name: charming-cod-917
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1751818448194
+status: 3
+tags: []
+user_id: root

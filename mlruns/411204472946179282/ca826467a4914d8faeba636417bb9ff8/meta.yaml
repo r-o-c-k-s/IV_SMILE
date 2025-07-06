@@ -1,0 +1,14 @@
+artifact_uri: file:///app/mlruns/411204472946179282/ca826467a4914d8faeba636417bb9ff8/artifacts
+end_time: 1750876646275
+entry_point_name: ''
+experiment_id: '411204472946179282'
+lifecycle_stage: active
+run_id: ca826467a4914d8faeba636417bb9ff8
+run_name: industrious-koi-804
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1750876630859
+status: 3
+tags: []
+user_id: root

@@ -8,28 +8,29 @@ from sqlalchemy import create_engine
 import mlflow
 import mlflow.pytorch
 from sklearn.preprocessing import StandardScaler
+import joblib
 
-# ✅ Forcer un URI local propre
+# ✅ Set MLflow tracking URI
 uri = os.getenv("MLFLOW_TRACKING_URI", "file:/app/mlruns").replace("file:///", "file:/")
 mlflow.set_tracking_uri(uri)
 print("👉 Tracking URI:", mlflow.get_tracking_uri())
 
 def train_gru():
-    # 🔌 Connexion DB
+    # 🔌 PostgreSQL connection
     PG_URI = (
         f"postgresql+psycopg2://{os.getenv('DB_USER')}:{os.getenv('DB_PASS')}"
         f"@{os.getenv('DB_HOST')}:{os.getenv('DB_PORT')}/{os.getenv('DB_NAME')}"
     )
     engine = create_engine(PG_URI)
 
-    # 🔧 Hyperparamètres
+    # 🔧 Hyperparameters
     SEQ_LENGTH = 10
     BATCH_SIZE = 64
     HIDDEN_SIZE = 64
     EPOCHS = 10
     LR = 0.001
 
-    # 📥 Données
+    # 📥 Load and preprocess data
     query = '''
     SELECT * FROM option_features
     WHERE iv IS NOT NULL
@@ -42,10 +43,11 @@ def train_gru():
                 'minutes_since_open', 'spot_price', 'right_enc']
     target = 'iv'
 
+    # ✅ Standardize features
     scaler = StandardScaler()
     df[features] = scaler.fit_transform(df[features])
 
-    # 📦 Dataset
+    # 📆 Prepare sequences grouped by (maturity, strike, right)
     class VolDataset(Dataset):
         def __init__(self, df, seq_len):
             self.X, self.y = [], []
@@ -69,8 +71,9 @@ def train_gru():
 
     dataset = VolDataset(df, SEQ_LENGTH)
     train_loader = DataLoader(dataset, batch_size=BATCH_SIZE, shuffle=True)
+    print(f"📊 Total sequences: {len(dataset)}")
 
-    # 🧠 Modèle GRU
+    # 🧠 GRU Model Definition
     class GRUModel(nn.Module):
         def __init__(self, input_size, hidden_size):
             super().__init__()
@@ -80,19 +83,19 @@ def train_gru():
         def forward(self, x):
             _, h = self.gru(x)
             out = self.fc(h[-1])
-            return out.squeeze()
+            return out.squeeze()  # ⚠️ ReLU removed for better flexibility
 
     model = GRUModel(input_size=len(features), hidden_size=HIDDEN_SIZE)
     optimizer = torch.optim.Adam(model.parameters(), lr=LR)
     criterion = nn.MSELoss()
 
-    # 🚀 Initialisation MLflow avec expérience
+    # 🚀 MLflow experiment setup
     experiment_name = "gru_volatility_model"
     if mlflow.get_experiment_by_name(experiment_name) is None:
         mlflow.create_experiment(experiment_name)
     mlflow.set_experiment(experiment_name)
 
-    # 📊 Lancer le run MLflow
+    # 📦 Start MLflow run
     with mlflow.start_run():
         mlflow.log_params({
             "model": "GRU",
@@ -103,7 +106,7 @@ def train_gru():
             "epochs": EPOCHS
         })
 
-        # 🔁 Entraînement
+        # 🔁 Training loop
         for epoch in range(EPOCHS):
             model.train()
             total_loss = 0
@@ -118,8 +121,16 @@ def train_gru():
             print(f"Epoch {epoch+1}/{EPOCHS} - Loss: {avg_loss:.6f}")
             mlflow.log_metric("epoch_loss", avg_loss, step=epoch+1)
 
-        # ✅ Log perte finale
         mlflow.log_metric("final_loss", avg_loss)
 
-        # ✅ Log automatique du modèle dans MLflow
+        # ✅ Save scaler into model folder
+        os.makedirs("model", exist_ok=True)
+        scaler_path = os.path.join("model", "scaler.pkl")
+        joblib.dump(scaler, scaler_path)
+
+        # ✅ Log both model and scaler under 'model'
         mlflow.pytorch.log_model(model, artifact_path="model")
+        mlflow.log_artifact(scaler_path, artifact_path="model")
+
+if __name__ == "__main__":
+    train_gru()

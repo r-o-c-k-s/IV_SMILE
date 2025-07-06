@@ -1,0 +1,14 @@
+artifact_uri: file:///app/mlruns/494802465030627392/536c44d441e54dd796bce5030d331887/artifacts
+end_time: 1750870786894
+entry_point_name: ''
+experiment_id: '494802465030627392'
+lifecycle_stage: active
+run_id: 536c44d441e54dd796bce5030d331887
+run_name: bedecked-crow-94
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1750870672511
+status: 3
+tags: []
+user_id: root

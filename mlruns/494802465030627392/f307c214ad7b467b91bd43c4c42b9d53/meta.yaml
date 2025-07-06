@@ -1,0 +1,14 @@
+artifact_uri: file:///app/mlruns/494802465030627392/f307c214ad7b467b91bd43c4c42b9d53/artifacts
+end_time: 1751055041447
+entry_point_name: ''
+experiment_id: '494802465030627392'
+lifecycle_stage: active
+run_id: f307c214ad7b467b91bd43c4c42b9d53
+run_name: luxuriant-sheep-533
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1751054850074
+status: 3
+tags: []
+user_id: root

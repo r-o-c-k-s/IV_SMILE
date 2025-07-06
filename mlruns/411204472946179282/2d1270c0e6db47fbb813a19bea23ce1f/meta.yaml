@@ -1,0 +1,14 @@
+artifact_uri: file:///app/mlruns/411204472946179282/2d1270c0e6db47fbb813a19bea23ce1f/artifacts
+end_time: null
+entry_point_name: ''
+experiment_id: '411204472946179282'
+lifecycle_stage: active
+run_id: 2d1270c0e6db47fbb813a19bea23ce1f
+run_name: sassy-hog-438
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1751598021106
+status: 1
+tags: []
+user_id: root

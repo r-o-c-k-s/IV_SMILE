@@ -1,0 +1,14 @@
+artifact_uri: file:///app/mlruns/411204472946179282/217c178b6749435f881fa16f22972af1/artifacts
+end_time: 1751063450425
+entry_point_name: ''
+experiment_id: '411204472946179282'
+lifecycle_stage: active
+run_id: 217c178b6749435f881fa16f22972af1
+run_name: smiling-snail-161
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1751063284949
+status: 3
+tags: []
+user_id: root

@@ -8,8 +8,8 @@ from datetime import datetime
 KAFKA_TOPIC = "spy_option_ticks"
 KAFKA_BROKER = os.getenv("BOOTSTRAP_SERVERS", "kafka:9092")
 SPOT_REQ_ID = 999
-STRIKE_WINDOW = 30
-PRINT_INTERVAL = 5
+STRIKE_WINDOW = 10
+PRINT_INTERVAL = 10
 
 def create_kafka_producer(bootstrap_servers, retries=10, delay=5):
     for attempt in range(retries):
@@ -42,10 +42,10 @@ class IBKafkaProducer(EWrapper, EClient):
         self.ticker_id_map = {}
         self.reverse_ticker_id = {}
         self._refresh_thread_started = False
-        self.refresh_interval = 5  # seconds
+        self.refresh_interval = 10  # seconds
 
         self.maturities = [
-            "20250523"
+            "20250701"
         ]
 
     def _get_ticker_id(self, maturity, strike, right):

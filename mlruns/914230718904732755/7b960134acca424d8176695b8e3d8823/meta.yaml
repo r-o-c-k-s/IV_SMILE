@@ -1,0 +1,14 @@
+artifact_uri: file:///app/mlruns/914230718904732755/7b960134acca424d8176695b8e3d8823/artifacts
+end_time: 1750876605138
+entry_point_name: ''
+experiment_id: '914230718904732755'
+lifecycle_stage: active
+run_id: 7b960134acca424d8176695b8e3d8823
+run_name: omniscient-owl-191
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1750876548723
+status: 3
+tags: []
+user_id: root

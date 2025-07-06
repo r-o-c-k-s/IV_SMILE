@@ -1,0 +1,14 @@
+artifact_uri: file:///app/mlruns/656360602954632657/d13c0208881845e78e4173b2906a298a/artifacts
+end_time: null
+entry_point_name: ''
+experiment_id: '656360602954632657'
+lifecycle_stage: active
+run_id: d13c0208881845e78e4173b2906a298a
+run_name: gregarious-croc-944
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1750870966644
+status: 1
+tags: []
+user_id: root

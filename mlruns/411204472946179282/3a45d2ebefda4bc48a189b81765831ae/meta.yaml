@@ -1,0 +1,14 @@
+artifact_uri: file:///app/mlruns/411204472946179282/3a45d2ebefda4bc48a189b81765831ae/artifacts
+end_time: 1751818093224
+entry_point_name: ''
+experiment_id: '411204472946179282'
+lifecycle_stage: active
+run_id: 3a45d2ebefda4bc48a189b81765831ae
+run_name: tasteful-asp-40
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1751818070671
+status: 3
+tags: []
+user_id: root

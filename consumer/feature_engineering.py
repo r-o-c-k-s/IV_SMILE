@@ -29,19 +29,35 @@ except Exception as e:
     latest_time = None
 
 # 📥 EXTRACT
-query = f"""
-SELECT
-    time AT TIME ZONE 'UTC' AS ts_utc,
-    spot_price,
-    maturity,
-    strike,
-    call_bid, call_ask, call_iv,
-    put_bid,  put_ask,  put_iv
-FROM spy_option_chain
-WHERE time AT TIME ZONE 'UTC' > COALESCE('{latest_time}'::timestamptz, NOW() - INTERVAL '{LOOKBACK_DAYS} days')
-  AND spot_price > 0
-  AND (call_bid > {MIN_BID_FILTER} OR put_bid > {MIN_BID_FILTER});
-"""
+if latest_time is None:
+    query = f"""
+    SELECT
+        time AT TIME ZONE 'UTC' AS ts_utc,
+        spot_price,
+        maturity,
+        strike,
+        call_bid, call_ask, call_iv,
+        put_bid,  put_ask,  put_iv
+    FROM spy_option_chain
+    WHERE time > NOW() - INTERVAL '{LOOKBACK_DAYS} days'
+      AND spot_price > 0
+      AND (call_bid > {MIN_BID_FILTER} OR put_bid > {MIN_BID_FILTER});
+    """
+else:
+    query = f"""
+    SELECT
+        time AT TIME ZONE 'UTC' AS ts_utc,
+        spot_price,
+        maturity,
+        strike,
+        call_bid, call_ask, call_iv,
+        put_bid,  put_ask,  put_iv
+    FROM spy_option_chain
+    WHERE time > '{latest_time}'
+      AND spot_price > 0
+      AND (call_bid > {MIN_BID_FILTER} OR put_bid > {MIN_BID_FILTER});
+    """
+
 print("📥 Executing SQL query...")
 raw_df = pd.read_sql(query, engine)
 print(f"📊 Retrieved {len(raw_df):,} rows from spy_option_chain")

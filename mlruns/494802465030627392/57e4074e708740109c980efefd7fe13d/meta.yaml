@@ -1,0 +1,14 @@
+artifact_uri: file:///app/mlruns/494802465030627392/57e4074e708740109c980efefd7fe13d/artifacts
+end_time: 1750881890158
+entry_point_name: ''
+experiment_id: '494802465030627392'
+lifecycle_stage: active
+run_id: 57e4074e708740109c980efefd7fe13d
+run_name: luxuriant-pug-82
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1750881778621
+status: 3
+tags: []
+user_id: root

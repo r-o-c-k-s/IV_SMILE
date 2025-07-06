@@ -1,0 +1,14 @@
+artifact_uri: file:///app/mlruns/411204472946179282/bc4c8038f30d423e8131d984adccaba7/artifacts
+end_time: 1751741511815
+entry_point_name: ''
+experiment_id: '411204472946179282'
+lifecycle_stage: active
+run_id: bc4c8038f30d423e8131d984adccaba7
+run_name: unequaled-smelt-395
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1751741484994
+status: 3
+tags: []
+user_id: root

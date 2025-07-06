@@ -1,0 +1,14 @@
+artifact_uri: file:///app/mlruns/494802465030627392/cbea8228080e4ca99ee8ea16dcf23b4d/artifacts
+end_time: 1751044237283
+entry_point_name: ''
+experiment_id: '494802465030627392'
+lifecycle_stage: active
+run_id: cbea8228080e4ca99ee8ea16dcf23b4d
+run_name: secretive-rook-944
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1751044003419
+status: 3
+tags: []
+user_id: root

@@ -1,0 +1,14 @@
+artifact_uri: file:///app/mlruns/411204472946179282/1bf3cc6f3fc944a187cb925cac473b15/artifacts
+end_time: 1751067244036
+entry_point_name: ''
+experiment_id: '411204472946179282'
+lifecycle_stage: active
+run_id: 1bf3cc6f3fc944a187cb925cac473b15
+run_name: bold-fox-236
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1751067005311
+status: 3
+tags: []
+user_id: root

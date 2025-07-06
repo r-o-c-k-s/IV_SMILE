@@ -1,0 +1,14 @@
+artifact_uri: file:///app/mlruns/494802465030627392/652c118930284cf082c95eec3be8c590/artifacts
+end_time: 1751597443528
+entry_point_name: ''
+experiment_id: '494802465030627392'
+lifecycle_stage: active
+run_id: 652c118930284cf082c95eec3be8c590
+run_name: amazing-doe-945
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1751597317721
+status: 3
+tags: []
+user_id: root

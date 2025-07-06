@@ -1,0 +1,14 @@
+artifact_uri: file:///app/mlruns/494802465030627392/1dbc0c3c481a48a5a4d7fdc3f04d5cec/artifacts
+end_time: 1750878752482
+entry_point_name: ''
+experiment_id: '494802465030627392'
+lifecycle_stage: active
+run_id: 1dbc0c3c481a48a5a4d7fdc3f04d5cec
+run_name: upset-moose-526
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1750878707049
+status: 3
+tags: []
+user_id: root

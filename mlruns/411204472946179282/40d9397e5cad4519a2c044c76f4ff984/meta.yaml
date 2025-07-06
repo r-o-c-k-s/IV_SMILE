@@ -1,0 +1,14 @@
+artifact_uri: file:///app/mlruns/411204472946179282/40d9397e5cad4519a2c044c76f4ff984/artifacts
+end_time: 1751741434590
+entry_point_name: ''
+experiment_id: '411204472946179282'
+lifecycle_stage: active
+run_id: 40d9397e5cad4519a2c044c76f4ff984
+run_name: burly-kit-835
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1751741407220
+status: 3
+tags: []
+user_id: root

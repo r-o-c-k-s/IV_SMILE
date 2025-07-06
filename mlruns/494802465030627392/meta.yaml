@@ -1,0 +1,6 @@
+artifact_location: file:///app/mlruns/494802465030627392
+creation_time: 1750870671216
+experiment_id: '494802465030627392'
+last_update_time: 1750870671216
+lifecycle_stage: active
+name: gru_volatility_model

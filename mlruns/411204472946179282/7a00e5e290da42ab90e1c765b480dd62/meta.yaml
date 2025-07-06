@@ -1,0 +1,14 @@
+artifact_uri: file:///app/mlruns/411204472946179282/7a00e5e290da42ab90e1c765b480dd62/artifacts
+end_time: 1751063116684
+entry_point_name: ''
+experiment_id: '411204472946179282'
+lifecycle_stage: active
+run_id: 7a00e5e290da42ab90e1c765b480dd62
+run_name: powerful-robin-293
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1751062937590
+status: 3
+tags: []
+user_id: root
