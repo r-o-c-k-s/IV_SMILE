@@ -1,3 +1,18 @@
+# Prédiction de la volatilité des options SPY
+
+Projet académique réalisé dans le cadre d’un cours d’intelligence artificielle.  
+Objectif : prédire la volatilité des options SPY à l’aide de modèles de machine learning.
+
+## Contributions personnelles
+- Définition du **business case** et cadrage du projet.  
+- Participation à l’**analyse exploratoire** des données financières.  
+- Vérification et **correction de code** (en pair programming, suggestions envoyées).  
+- Documentation et préparation de la présentation.  
+
+## Collaborateurs
+Projet réalisé en collaboration avec [KAMOURI018](https://github.com/KAMOURI018).
+
+
 # 📈 Pipeline de Prédiction du Volatility Smile du SPY en Temps Réel
 
 Ce projet met en œuvre une architecture complète pour la prédiction du *volatility smile* du SPY en temps réel à l'aide de modèles d'IA (GRU, LSTM, MLP, Transformer). Il inclut la collecte des données via l’API TWS d’IBKR, le streaming temps réel avec Kafka, le stockage avec TimescaleDB, l’ingénierie de caractéristiques, l'entraînement de modèles, la prédiction temps réel et la visualisation dynamique avec Streamlit.
