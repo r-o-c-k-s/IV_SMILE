@@ -182,8 +182,8 @@ docker-compose up --build
 
 ## 📬 Contact
 
-**Khalil Amouri**  
+**Saad Rik**  
 FRM | AI pour la Finance  
 📍 Montréal, Canada  
-✉️ cashcouscous.ai@gmail.com  
-TikTok: [@cashcouscous](https://tiktok.com/@cashcouscous)
+✉️ riksaad@gmail.com  
+
